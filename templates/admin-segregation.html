@@ -1,0 +1,87 @@
+{% include 'base.html' %}
+
+<br>
+
+<div class="container">
+    <h2>Voted:</h2>
+</div>
+
+<br>
+<center class="container">
+    <table class="table table-striped table-hover table-bordered table-responsive">
+        <tr class="table-dark">
+          <th>Username</th>
+          <th>Email</th>
+          <th>Area</th>
+          <th>Admin?</th>
+          <th>Voted?</th>
+          <th>Status</th>
+        </tr>
+    
+        {% for voter in voters %}
+            {% if voter.is_voted %}
+            <tr>
+                <td>{{voter.user.username}}</td>
+                <td>{{voter.user.email}}</td>
+                <td>{{voter.area}}</td>
+                <td>
+                    {{voter.is_admin}}
+                </td>
+                <td>{{voter.is_voted}}</td>
+                <td>
+                    {{voter.status}}
+                </td>
+            </tr>
+            {% endif %}
+        {% endfor %}
+    
+    </table>
+</center>
+
+<br>
+
+<div class="container">
+    <h2>Non-Voted:</h2>
+</div>
+
+<br>
+<center class="container">
+    <table class="table table-striped table-hover table-bordered table-responsive">
+        <tr class="table-dark">
+          <th>Username</th>
+          <th>Email</th>
+          <th>Area</th>
+          <th>Admin?</th>
+          <th>Voted?</th>
+          <th>Status</th>
+        </tr>
+    
+        {% for voter in voters %}
+            {% if voter.is_voted == False %}
+            <tr>
+                <td>{{voter.user.username}}</td>
+                <td>{{voter.user.email}}</td>
+                <td>{{voter.area}}</td>
+                <td>
+                    {{voter.is_admin}}
+                </td>
+                <td>{{voter.is_voted}}</td>
+                <td>
+                    {{voter.status}}
+                </td>
+            </tr>
+            {% endif %}
+        {% endfor %}
+    
+    </table>
+</center>
+
+
+<div class="container">
+    <a href="{% url 'admin-analytics' %}" class="btn btn-primary btn-block">Analytics</a>
+    <a href="{% url 'admin-permissions' %}" class="btn btn-primary btn-block">Permissions</a>
+
+    <a href="{% url 'logoutt' %}" class="btn btn-block btn-dark">Logout</a>
+
+</div>
+

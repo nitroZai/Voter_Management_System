@@ -1,0 +1,14 @@
+
+
+{% include 'base.html' %}
+
+<h2>Successfully Casted your vote!</h2>
+
+
+<form action="{% url 'logoutt' %}" method="post">
+
+    {% csrf_token %}
+    
+    <input type="submit" value="Logout">
+</form>
+

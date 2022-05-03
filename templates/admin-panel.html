@@ -1,0 +1,14 @@
+{% include 'base.html' %}
+
+<div class="container">
+    <h2>Welcome {{name}}, to Admin Panel</h2>
+</div>
+
+<br><br><br>
+<div class="container">
+    <a href="{% url 'admin-analytics' %}" class="btn btn-primary btn-block">Analytics</a>
+    <a href="{% url 'admin-permissions' %}" class="btn btn-primary btn-block">Permissions</a>
+    <a href="{% url 'admin-segregation' %}" class="btn btn-primary btn-block">Voted & Not Voted Segregation</a>
+    <a href="{% url 'logoutt' %}" class="btn btn-block btn-dark">Logout</a>
+
+</div>

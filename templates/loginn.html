@@ -1,0 +1,17 @@
+
+{% include 'base.html' %}
+
+<form action="{% url 'loginn-output' %}" method="post" class="container">
+
+    {% csrf_token %}
+
+    <br><br>
+    <label for="name">Username</label>
+    <input class="form-control" type="text" name="username">
+    
+    <label for="name">Password</label>
+    <input class="form-control" type="text" name="password">
+    <br>
+    <input type="submit" class="btn btn-primary btn-block" value="Login" class="form-control">
+
+</form>

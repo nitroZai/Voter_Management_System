@@ -1,0 +1,28 @@
+{% include 'base.html' %}
+
+<center class="container">
+    <table class="table table-striped table-hover table-bordered table-responsive">
+        <tr class="table-dark">
+          <th>Candidate</th>
+          <th>Votes</th>
+          <th>Area</th>
+        </tr>
+    
+        {% for candidate in candidates %}
+            <tr>
+                <td>{{candidate.candidate_name}}</td>
+                <td>{{candidate.votes}}</td>
+                <td>{{candidate.area}}</td>
+            </tr>
+        {% endfor %}
+    
+    </table>
+</center>
+
+
+
+<div class="container">
+    <a href="{% url 'admin-permissions' %}" class="btn btn-primary btn-block">Permissions</a>
+    <a href="{% url 'admin-segregation' %}" class="btn btn-primary btn-block">Voted & Not Voted Segregation</a>
+    <a href="{% url 'logoutt' %}" class="btn btn-block btn-dark">Logout</a>
+</div>

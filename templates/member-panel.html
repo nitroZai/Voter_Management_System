@@ -1,0 +1,19 @@
+
+{% include 'base.html' %}
+
+<br><br>
+<div class="container">
+    
+     <form action="{% url 'member-vote-success' %}" method="post">
+    
+        {% csrf_token %}
+    
+        <select name="candi" class="form-control custom-select custom-select-lg mb-3">
+            {% for candidate in candidates %}
+            <option value="{{candidate.candidate_name}}">{{candidate.candidate_name}}</option>
+            {% endfor %}
+        </select>
+    
+        <input type="submit" class="btn btn-block btn-dark" value="Vote">
+    </form>
+</div>
