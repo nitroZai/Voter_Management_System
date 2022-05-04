@@ -21,6 +21,10 @@ def register_details_save(request):
         password1= request.POST.get('password1')
         password2= request.POST.get('password2')
 
+        if User.objects.filter(username = username).exists():
+            errString = "Username is already present!"
+            return render(request, 'not-found.html', {'context': errString})
+
         if password1 == password2:
             user = User.objects.create_user(username = username, email = email)
             user.set_password(password1)
@@ -33,6 +37,10 @@ def register_details_save(request):
             voter.is_admin = False
             voter.status = "Pending"
             voter.save()
+        else:
+            errString = "Passwords didn't match"
+            return render(request, 'not-found.html', {'context': errString})
+
             
     return render(request, 'loginn.html')
 
@@ -49,7 +57,8 @@ def loginn_output(request):
         try:
             user = User.objects.get(username = username)
         except:
-            return HttpResponse("<h2>Username not found</h2>")
+            errString = "Username is not found in our DB"
+            return render(request, 'not-found.html', {'context': errString})
 
         userLogin = authenticate(username = username, password = password)
 
@@ -58,6 +67,7 @@ def loginn_output(request):
             voter = Voter.objects.get(user = user)
             admin_decide = voter.is_admin
             status_check = voter.status
+            vote_check = voter.is_voted
 
             context = {
                 'name': user.username
@@ -68,17 +78,21 @@ def loginn_output(request):
             else:
                 if status_check == "Accepted":
 
-                    candidates = Candidate.objects.all()
+                    if vote_check == False:
+                        candidates = Candidate.objects.all()
+                        context = {
+                            'candidates':candidates
+                        }
+                        return render(request, 'member-panel.html', context)
+                    else:
+                        return render(request, 'member-done-voting.html')
 
-                    context = {
-                        'candidates':candidates
-                    }
-
-                    return render(request, 'member-panel.html', context)
                 else:
-                    return HttpResponse("<h2>Your Account isn't verified yet.</h2>")
+                    errString = "Your Account isn't verified yet."
+                    return render(request, 'not-found.html', {'context': errString})
         else:
-            return HttpResponse("<h2>Wrong Credentials</h2>")
+            errString = "Wrong Credentials!"
+            return render(request, 'not-found.html', {'context': errString})
 
     return render(request, 'loginn-output.html')
 

@@ -2,13 +2,16 @@
 
 {% include 'base.html' %}
 
-<h2>Successfully Casted your vote!</h2>
+<br><br>
 
+<div class="container">
+    <h2 class="text-center">Successfully Casted your vote!</h2>
 
-<form action="{% url 'logoutt' %}" method="post">
-
-    {% csrf_token %}
+    <br><br>
+    <form action="{% url 'logoutt' %}" method="post">
     
-    <input type="submit" value="Logout">
-</form>
+        {% csrf_token %}
+        <input type="submit" class = "btn btn-block btn-dark" value="Logout">
+    </form>
+</div>
 

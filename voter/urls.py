@@ -1,5 +1,7 @@
 from django.urls import path
 from . import views
+from django.conf.urls.static import static
+from hub import settings
 
 urlpatterns = [
 
@@ -15,4 +17,4 @@ urlpatterns = [
     path('member-status-change/<username>', views.memeber_status_change, name='memeber-status-change'),
     path('member-vote-success/', views.member_vote_success, name = 'member-vote-success'),
     path('logoutt/', views.logoutt, name="logoutt"),
-]
+] + static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)

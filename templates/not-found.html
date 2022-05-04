@@ -1,0 +1,15 @@
+
+{% load static %}
+
+{% include 'base.html' %}
+
+<br><br>
+
+<div class="container">
+    <h2 class="text-center">{{context}}</h2>
+    <div class="text-center">
+        <img style="height: 500px;" src="{% static 'images/dog.png' %}"  alt="Rocky looking at you">
+        <a href="{% url 'register' %}" class="btn btn-dark btn-block">Register</a>
+        <a href="{% url 'loginn' %}" class="btn btn-dark btn-block">Login</a>
+    </div>
+</div>
