@@ -129,13 +129,16 @@ def admin_segregation(request):
 def admin_rights(request, username):
     
     if request.method == 'POST':
-        voter = Voter.objects.select_related('user').all()
+        voters = Voter.objects.select_related('user').all()
 
         admin_rights = request.POST.get('admin_rights')
         # status_change = request.POST.get('status_change')
 
-        if admin_rights == str(True) or admin_rights == str(False):
+        if admin_rights == "True" or admin_rights == "False":
             user = User.objects.get(username = username)
+
+
+            print("Here")
             print(user.username)
             if admin_rights == str(True):
                 Voter.objects.filter(user = user).update(is_admin = True)
@@ -143,7 +146,7 @@ def admin_rights(request, username):
                 Voter.objects.filter(user = user).update(is_admin = False)
         
     context = {
-        'voters': voter,
+        'voters': voters,
     }
 
     return render(request, 'admin-permissions.html', context)
@@ -151,7 +154,7 @@ def admin_rights(request, username):
 def memeber_status_change(request, username):
   
     if request.method == 'POST':
-        voter = Voter.objects.select_related('user').all()
+        voters = Voter.objects.select_related('user').all()
 
         status_change = request.POST.get('status_change')
         # status_change = request.POST.get('status_change')
@@ -162,7 +165,7 @@ def memeber_status_change(request, username):
             Voter.objects.filter(user = user).update(status = status_change)
             
     context = {
-        'voters': voter,
+        'voters': voters,
     }
 
     return render(request, 'admin-permissions.html', context)
@@ -182,6 +185,27 @@ def member_vote_success(request):
         Candidate.objects.filter(candidate_name = candidate).update(votes = candyVotes)
 
     return render(request, 'member-vote-success.html')
+
+def search(request):
+
+    if request.method == 'POST':
+
+        searchValue = request.POST.get('search')
+
+        if searchValue == '':
+            voters = Voter.objects.select_related('user').all()
+            return render(request, 'admin-permissions.html', {'voters': voters})
+
+        print(searchValue)
+        user = User.objects.get(username = searchValue)
+        voters = Voter.objects.select_related('user').filter(user=user)
+        context = {'voters': voters}
+
+    else:
+
+        pass
+
+    return render(request, 'admin-permissions.html', context)
 
 def logoutt(request):
     logout(request)

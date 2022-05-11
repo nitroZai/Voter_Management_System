@@ -12,6 +12,7 @@ urlpatterns = [
     path('loginn-output/', views.loginn_output, name="loginn-output"),
     path('analytics/', views.admin_analytics, name="admin-analytics"),
     path('permissons/', views.admin_permissions, name="admin-permissions"),
+    path('search/', views.search, name="search"),
     path('segregation/', views.admin_segregation, name="admin-segregation"),
     path('admin-rights/<username>', views.admin_rights, name='admin-rights'),
     path('member-status-change/<username>', views.memeber_status_change, name='memeber-status-change'),

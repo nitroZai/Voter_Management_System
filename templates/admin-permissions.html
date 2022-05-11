@@ -2,7 +2,23 @@
 {% include 'base.html' %}
 
 
-<br><br><br><br>
+
+
+<br><br>
+
+<div class="container" style="width: 70%">
+    <form action="{% url 'search' %}" method="post">
+    
+        {% csrf_token %}
+    
+        <input class='form-control' type="text" name="search" placeholder="Search...">
+        <br>
+        <input type="submit" class="btn btn-block btn-dark"value="Search">
+    
+    </form>
+</div>
+
+<br><br>
 <center class="container">
     <table class="table table-striped table-hover table-bordered table-responsive">
         <tr class="table-dark">
@@ -28,7 +44,7 @@
                         {% csrf_token %}
 
                         <select name="admin_rights">
-                            <option value=""> Choose one </option>
+                            <option value="Choose"> Choose one </option>
                             <option value="True"> True </option>
                             <option value="False"> False </option>
                         </select>
