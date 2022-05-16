@@ -193,12 +193,12 @@ def search(request):
         searchValue = request.POST.get('search')
 
         if searchValue == '':
-            voters = Voter.objects.select_related('user').all()
+            voters = Voter.objects.prefetch_related('user').all()
             return render(request, 'admin-permissions.html', {'voters': voters})
 
         print(searchValue)
         user = User.objects.get(username = searchValue)
-        voters = Voter.objects.select_related('user').filter(user=user)
+        voters = Voter.objects.prefetch_related('user').filter(user=user)
         context = {'voters': voters}
 
     else:
