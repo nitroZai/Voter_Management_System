@@ -1,40 +1,163 @@
-
 {% include 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registration Form</title>
+  </head>
+  <body>
+    <br /><br />
+    <div class="container">
+      <h2>Registration Form</h2>
 
-<br><br>
-
-<div class="container">
-    <h2>Registration Form</h2>
-    
-    <form action="{% url 'register-details-save' %}" method="post">
-    
+      <form action="{% url 'register-details-save' %}" method="post">
         {% csrf_token %}
-    
-        <br><br>
-    
+
+        <br /><br />
+
         <label for="name">Username</label>
-        <input class="form-control" type="text" name="username" required>
-    
+        <input
+          class="form-control"
+          id="username"
+          type="text"
+          name="username"
+          required
+        />
+        <small id="username-small"></small>
+        <br />
         <label for="name">Email</label>
-        <input type="email" class="form-control" name="email" required>
-    
-        <br>
+        <input
+          type="email"
+          id="email"
+          class="form-control"
+          name="email"
+          required
+        />
+        <small id="email-small"></small>
+        <br />
         Choose your Area:
-        <select name="area" class="form-control custom-select custom-select-lg mb-3" required>
-            {% for area in areas %}
-            <option value="{{ area.area }}">{{ area.area }}</option>
-            {% endfor %}
+        <select
+          name="area"
+          class="form-control custom-select custom-select-lg mb-3"
+          required
+        >
+          {% for area in areas %}
+          <option value="{{ area.area }}">{{ area.area }}</option>
+          {% endfor %}
         </select>
-        <br>
-    
+        <br />
+
         <label for="name">Password</label>
-        <input type="password" class="form-control" name="password1" required>
-    
+        <input
+          type="password"
+          id="password1"
+          class="form-control"
+          name="password1"
+          required
+        />
+
         <label for="name">Confirm Password</label>
-        <input type="password" name="password2" class="form-control" required>
-        <br>
-    
-        <input type="submit" class="btn btn-primary btn-block" value="Register!" class="form-control">
-    
-    </form>
-</div>
+        <input
+          type="password"
+          id="password2"
+          name="password2"
+          class="form-control"
+          required
+        />
+        <small id="password-confirm-small"></small>
+
+        <br />
+
+        <input type="checkbox" id="checkbox" onclick="allVerification()" />
+        Terms and Conditions
+        <br /><br />
+        <input
+          type="submit"
+          class="btn btn-primary btn-block"
+          value="Register!"
+          class="form-control"
+        />
+      </form>
+
+      <script>
+        document.querySelector("#username").addEventListener("keydown", (e) => {
+          validateUsername();
+        });
+
+        document.querySelector("#email").addEventListener("keydown", (e) => {
+          validateEmail();
+        });
+
+        document.querySelector("#password2").addEventListener("keyup", (e) => {
+          validatePassword();
+        });
+
+        let is_valid = false;
+
+        function allVerification() {
+          if (is_valid == false) {
+            alert("Enter the deatils properly");
+            document.getElementById("checkbox").checked = false;
+          }
+        }
+
+        function validateUsername() {
+          var username = document.getElementById("username");
+          var usernameSmall = document.getElementById("username-small");
+
+          console.log(username.value.length);
+
+          if (username.value.length < 5) {
+            usernameSmall.innerHTML = "Username too small";
+            document.querySelector("#username-small").style.color = "red";
+            is_valid = false;
+          } else {
+            usernameSmall.innerHTML = "Username has no errors";
+            document.querySelector("#username-small").style.color = "green";
+            is_valid = true;
+          }
+        }
+
+        function validateEmail() {
+          var email = document.getElementById("email");
+
+          var emailSmall = document.getElementById("email-small");
+
+          if (email.value.length < 5) {
+            emailSmall.innerHTML = "email is too small";
+            document.querySelector("#email-small").style.color = "red";
+            is_valid = false;
+          } else {
+            emailSmall.innerHTML = "email has no errors";
+            document.querySelector("#email-small").style.color = "green";
+            is_valid = true;
+          }
+        }
+
+        function validatePassword() {
+          var password1 = document.getElementById("password1");
+          var password2 = document.getElementById("password2");
+
+          var passwordSmall = document.getElementById("password-confirm-small");
+
+          console.log("Password1", password1.value);
+          console.log("Conf", password2.value);
+
+          if (password1.value !== password2.value) {
+            passwordSmall.innerHTML = "Passwords do not match";
+            document.querySelector("#password-confirm-small").style.color =
+              "red";
+            is_valid = false;
+          } else {
+            passwordSmall.innerHTML = "Passwords Perfectly match!";
+            document.querySelector("#password-confirm-small").style.color =
+              "green";
+            is_valid = true;
+          }
+        }
+      </script>
+    </div>
+  </body>
+</html>
