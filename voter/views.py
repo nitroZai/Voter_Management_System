@@ -4,7 +4,6 @@ from .models import *
 from django.contrib.auth import authenticate,login,logout
 
 def home(request):
-
     return render(request, 'home.html')
 
 def register(request):

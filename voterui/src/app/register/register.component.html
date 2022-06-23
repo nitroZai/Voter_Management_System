@@ -1,0 +1,58 @@
+<br /><br />
+    <div class="container">
+      <h2>Registration Form</h2>
+
+      <form>
+        <br /><br />
+
+        <label for="name">Username</label>
+        <input
+          class="form-control"
+          type="text"
+          (input)="onUsername($event)"
+          required
+        />
+          <br />
+        <label for="name">EmailID</label>
+        <input
+          type="email"
+          id="email"
+          class="form-control"
+          name="email"
+          (input)="onEmail($event)"
+          required
+        />
+        <br />
+        Choose your Area:
+        <select
+          name="area"
+          class="form-control custom-select custom-select-lg mb-3"
+          #onArea 
+          required
+        >
+          <option *ngFor="let item of areaData" value="{{item.area}}">{{item.area}}</option>
+        </select>
+        <br />
+
+        <label for="name">Password</label>
+        <input
+          type="password"
+          class="form-control"
+          (input)="onPassword($event)"
+          required
+        />
+
+        <label for="name">Confirm Password</label>
+        <input
+          type="password"
+          class="form-control"
+          (input)="onConfirmPassword($event)"
+          required
+        />
+        <small #passwordSmallStyle>{{passwordSmall}}</small>
+        
+        <br />
+
+        <button class="btn btn-block btn-primary" (click)="onRegisterSubmit()">Submit</button>
+          
+      </form>

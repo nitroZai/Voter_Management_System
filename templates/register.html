@@ -81,28 +81,45 @@
         <input
           type="submit"
           class="btn btn-primary btn-block"
+          onclick="alerto()"
           value="Register!"
           class="form-control"
         />
       </form>
 
       <script>
-        document.querySelector("#username").addEventListener("keydown", (e) => {
+        document.querySelector("#username").addEventListener("keyup", (e) => {
           validateUsername();
         });
 
-        document.querySelector("#email").addEventListener("keydown", (e) => {
-          validateEmail();
+        document.querySelector("#email").addEventListener("keyup", (e) => {
+          validateEmail(e);
         });
 
         document.querySelector("#password2").addEventListener("keyup", (e) => {
           validatePassword();
         });
 
-        let is_valid = false;
+        let usernameValid = false;
+        let passwordValid = false;
+        let emailValid = false;
+
+        function alerto() {
+          if (
+            usernameValid === false ||
+            passwordValid === false ||
+            emailValid === false
+          ) {
+            alert("Check the details properly and Try again!");
+          }
+        }
 
         function allVerification() {
-          if (is_valid == false) {
+          if (
+            usernameValid === false ||
+            passwordValid === false ||
+            emailValid === false
+          ) {
             alert("Enter the deatils properly");
             document.getElementById("checkbox").checked = false;
           }
@@ -114,30 +131,50 @@
 
           console.log(username.value.length);
 
-          if (username.value.length < 5) {
+          if (username.value.length < 2) {
             usernameSmall.innerHTML = "Username too small";
             document.querySelector("#username-small").style.color = "red";
-            is_valid = false;
+            usernameValid = false;
           } else {
-            usernameSmall.innerHTML = "Username has no errors";
+            usernameSmall.innerHTML = "Username isn't short";
             document.querySelector("#username-small").style.color = "green";
-            is_valid = true;
+            usernameValid = true;
           }
         }
 
-        function validateEmail() {
-          var email = document.getElementById("email");
-
+        function validateEmail(event) {
+          const email = event.target.value;
           var emailSmall = document.getElementById("email-small");
 
-          if (email.value.length < 5) {
-            emailSmall.innerHTML = "email is too small";
+          if (email === "") {
+            emailSmall.innerHTML = "Email can't be null!";
             document.querySelector("#email-small").style.color = "red";
-            is_valid = false;
+            emailValid = false;
           } else {
-            emailSmall.innerHTML = "email has no errors";
-            document.querySelector("#email-small").style.color = "green";
-            is_valid = true;
+            let indexAt = email.indexOf("@");
+            let indexEnd;
+            const ends = [".com", ".in", ".co.in"];
+
+            for (let i of ends) {
+              if (email.indexOf(i) !== -1) {
+                indexEnd = email.indexOf(i);
+                break;
+              } else {
+                indexEnd = -1;
+              }
+            }
+
+            console.log(indexAt, indexEnd);
+
+            if (indexAt === -1 || indexEnd === -1) {
+              emailSmall.innerHTML = "Email isn't valid";
+              document.querySelector("#email-small").style.color = "red";
+              emailValid = false;
+            } else {
+              emailSmall.innerHTML = "Email is in correct format";
+              document.querySelector("#email-small").style.color = "green";
+              emailValid = true;
+            }
           }
         }
 
@@ -154,12 +191,12 @@
             passwordSmall.innerHTML = "Passwords do not match";
             document.querySelector("#password-confirm-small").style.color =
               "red";
-            is_valid = false;
+            passwordValid = false;
           } else {
             passwordSmall.innerHTML = "Passwords Perfectly match!";
             document.querySelector("#password-confirm-small").style.color =
               "green";
-            is_valid = true;
+            passwordValid = true;
           }
         }
       </script>

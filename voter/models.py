@@ -33,6 +33,5 @@ class Candidate(models.Model):
     votes          = models.IntegerField()
     area           = models.ForeignKey(Area, on_delete=models.PROTECT) 
 
-
     def __str__(self) -> str:
         return self.candidate_name

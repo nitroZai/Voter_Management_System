@@ -1,0 +1,21 @@
+
+<div class="container">
+    
+    <form class="form-group">
+    
+        <label for="username">UserName</label>
+        <input type="text" (input) = "onUsernameChange($event)">
+        <br>
+        {{username}}
+        <br>
+        <br>
+        <label for="password">Password</label>
+        <input type="text"  (input) = "onPasswordChange($event)">
+    <br>
+    
+        <button class="btn btn-primary" (click)="onLoginVerification()">
+            Login
+        </button>
+    
+    </form>
+</div>
