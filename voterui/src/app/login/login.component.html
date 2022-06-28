@@ -4,18 +4,15 @@
     <form class="form-group">
     
         <label for="username">UserName</label>
-        <input type="text" (input) = "onUsernameChange($event)">
-        <br>
-        {{username}}
+        <input type="text" class="form-control"  (input) = "onUsernameChange($event)">
         <br>
         <br>
         <label for="password">Password</label>
-        <input type="text"  (input) = "onPasswordChange($event)">
+        <input type="password" class="form-control"  (input) = "onPasswordChange($event)">
     <br>
     
-        <button class="btn btn-primary" (click)="onLoginVerification()">
+        <button class="btn btn-primary" (click)="onLoginVerification()" >
             Login
         </button>
-    
     </form>
 </div>

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,18 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'voterui';
+
+  constructor(private router: Router){
+    // this.router.navigate(['apiRegister'])
+  }
+
+  onRegistrationNavigate(){
+    this.router.navigate(['apiRegister'])
+  }
+
+  onLoginNavigate(){
+    this.router.navigate(['apiLogin'])
+  }
+
+
 }

@@ -6,6 +6,12 @@ from hub import settings
 urlpatterns = [
     path('apiLogin', apiViews.apiLogin),
     path('apiRegister', apiViews.apiRegister),
+    path('apiLoginCheck', apiViews.apiLoginCheck),
+    path('apiAllCandidates', apiViews.apiAllCandidates),
+    path('apiAnalytics', apiViews.apiAnalytics),
+    path('apiSegregations', apiViews.apiSegregations),
+    path('apiAdminPermissions', apiViews.apiAdminPermissions),
+    path('apiAdminUserStatus', apiViews.apiAdminUserStatus),
     path('', views.home, name="home"),
     path('register/', views.register, name="register"),
     path('register-details-save', views.register_details_save, name="register-details-save"),

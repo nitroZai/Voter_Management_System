@@ -12,6 +12,7 @@
           (input)="onUsername($event)"
           required
         />
+        <b><small #usernameSmallStyle>{{usernameSmall}}</small></b>
           <br />
         <label for="name">EmailID</label>
         <input
@@ -22,6 +23,7 @@
           (input)="onEmail($event)"
           required
         />
+        <b><small #emailSmallStyle>{{emailSmall}}</small></b>
         <br />
         Choose your Area:
         <select
@@ -32,7 +34,6 @@
         >
           <option *ngFor="let item of areaData" value="{{item.area}}">{{item.area}}</option>
         </select>
-        <br />
 
         <label for="name">Password</label>
         <input
@@ -41,6 +42,7 @@
           (input)="onPassword($event)"
           required
         />
+        <br>
 
         <label for="name">Confirm Password</label>
         <input
@@ -49,8 +51,8 @@
           (input)="onConfirmPassword($event)"
           required
         />
-        <small #passwordSmallStyle>{{passwordSmall}}</small>
-        
+        <b><small #passwordSmallStyle>{{passwordSmall}}</small></b>
+        <br>
         <br />
 
         <button class="btn btn-block btn-primary" (click)="onRegisterSubmit()">Submit</button>

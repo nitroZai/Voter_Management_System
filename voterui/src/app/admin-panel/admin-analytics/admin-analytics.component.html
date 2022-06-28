@@ -1,0 +1,21 @@
+
+<br>
+<br>
+<br>
+
+<div class="container">
+    <table class="table table-striped table-hover table-bordered table-responsive">
+        <tr class="table-dark">
+          <th style="color: black">Candidate</th>
+          <th style="color: black">Votes</th>
+          <th style="color: black">Area</th>
+        </tr>
+
+        <tr *ngFor="let candidate of candidates">
+            <td>{{candidate.candidate_name}}</td>
+            <td>{{candidate.votes}}</td>
+            <td>{{candidate.area}}</td>
+        </tr>
+
+    </table>
+</div>

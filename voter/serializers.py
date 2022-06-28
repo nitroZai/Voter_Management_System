@@ -24,7 +24,14 @@ class AreaSerializer(serializers.ModelSerializer):
         )
 
 class VoterSerializer(serializers.ModelSerializer):
-
+    user = serializers.SlugRelatedField(
+        read_only=True,
+        slug_field='username'
+    )
+    area = serializers.SlugRelatedField(
+        read_only=True,
+        slug_field='area'
+    )
     class Meta:
 
         model = Voter
@@ -38,7 +45,12 @@ class VoterSerializer(serializers.ModelSerializer):
 
         )
 
-class Candidate(serializers.ModelSerializer):
+class CandidateSerializer(serializers.ModelSerializer):
+
+    area = serializers.SlugRelatedField(
+        read_only=True,
+        slug_field='area'
+    )
 
     class Meta:
 

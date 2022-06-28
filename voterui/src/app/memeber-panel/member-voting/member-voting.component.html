@@ -1,0 +1,13 @@
+<br><br>
+<div class="container">
+    
+    <h3>Vote to your favorite candidate!</h3>
+
+     <form>
+        <select name="candi" #candidateName class="form-control custom-select custom-select-lg mb-3">
+            <option *ngFor="let candidate of candidates" value="{{candidate.candidate_name}}">{{candidate.candidate_name}}</option>
+        </select>
+    
+        <button type="submit" class="btn btn-block btn-dark" (click)="onSubmitVoteData()" >Vote</button>
+    </form>
+</div>

@@ -22,7 +22,7 @@ class Voter(models.Model):
     user       = models.OneToOneField(User, on_delete=models.CASCADE)
     is_admin   = models.BooleanField(default=False)
     is_voted   = models.BooleanField(default=False)
-    status     = models.CharField(max_length=10, default=PENDING, choices=STATUS_CHOICES)
+    status     = models.CharField(max_length=10, default=ACCEPTED, choices=STATUS_CHOICES)
     area       = models.ForeignKey(Area, on_delete=models.PROTECT)
 
     def __str__(self) -> str:

@@ -2,7 +2,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
 from rest_framework.decorators import api_view
-from .serializers import UserSerializer, VoterSerializer, AreaSerializer, Candidate
+from .serializers import UserSerializer, VoterSerializer, AreaSerializer, CandidateSerializer
 from django.contrib.auth.models import User
 from .models import *
 from django.contrib.auth import authenticate
@@ -29,8 +29,13 @@ def apiLogin(request):
 
         print(x)
 
+        user = User.objects.get(username=username)
+        voter = Voter.objects.get(user = user)
+
+        voterSerial = VoterSerializer(voter)
+
         if x!= None:
-            return JsonResponse( { 'username': username, 'password': password} )
+            return JsonResponse( voterSerial.data )
         return JsonResponse("Failed", safe=False)
 
 @csrf_exempt
@@ -70,3 +75,126 @@ def apiRegister(request):
         
         return JsonResponse(areaSerial.data, safe = False)
         
+@csrf_exempt
+@api_view(['POST'])
+def apiLoginCheck(request):
+
+    if request.method == 'POST':
+
+        try:
+            
+            username = request.data['username']
+            print(username)
+
+            user = User.objects.get(username=username)
+            voter = Voter.objects.get(user = user)
+            print(voter)
+            voterSerial = VoterSerializer(voter)
+            return JsonResponse(voterSerial.data, safe = False)
+
+        except:
+
+            return JsonResponse(True, safe= False)
+
+@csrf_exempt
+@api_view(['GET', 'POST'])
+def apiAllCandidates(request):
+
+    if request.method == 'GET':
+
+        candidates = Candidate.objects.all()
+        candidateSerial = CandidateSerializer(candidates, many = True)
+
+        return JsonResponse(candidateSerial.data, safe = False) 
+
+    elif request.method == 'POST':
+        print(request.data)
+
+        if request.data:
+            username = request.data['username']
+            candidateName = request.data['candidateName']
+            
+            user = User.objects.get(username = username)
+            Voter.objects.filter(user = user).update(is_voted = True)
+
+            candy = Candidate.objects.get(candidate_name = candidateName)
+            candyVotes = candy.votes + 1
+
+            Candidate.objects.filter(candidate_name = candidateName).update(votes = candyVotes)
+            return JsonResponse("Candidate Voted Successfully", safe = False)
+
+        return JsonResponse("Candidate Does not exist", safe= False)
+
+@api_view(['GET', 'POST'])
+def apiAnalytics(request):
+
+    if request.method == "GET":
+        candidates = Candidate.objects.all()
+        candidateSerial = CandidateSerializer(candidates, many = True)
+        return JsonResponse(candidateSerial.data, safe= False)
+    
+@api_view(['GET', 'POST'])
+def apiSegregations(request):
+
+    if request.method == "GET":
+        
+        voters = Voter.objects.all()
+        # return JsonResponse(dict(users),safe=False)
+        
+        voterSerial = VoterSerializer(voters, many= True)
+
+        # e = []
+
+        # for voter in voters:
+        #     e.append(voter)
+        # data = {"data": e}
+
+
+        return JsonResponse(voterSerial.data, safe=False)
+
+
+# def apiPermissions(request):
+
+#     if request.method == "GET":
+        
+#         voters = Voter.objects.all()
+#         voterSerial = VoterSerializer(voters, many= True)
+#         return JsonResponse(voterSerial.data, safe=False)
+
+#     elif request.method == "POST":
+
+#         search = request.data['search']
+
+@api_view(['GET', 'POST'])
+def apiAdminPermissions(request):
+
+    if request.method == "POST":
+
+        adminPermissionData = JSONParser().parse(request)
+
+        is_admin = adminPermissionData['is_admin']
+        voterUsername = adminPermissionData['voter']
+
+        print(is_admin, voterUsername)
+        user = User.objects.get(username = voterUsername)
+        voter = Voter.objects.filter(user = user).update(is_admin = is_admin)
+
+        return JsonResponse("Made Admin", safe = False)
+
+
+
+@api_view(['GET', 'POST'])
+def apiAdminUserStatus(request):
+    
+    if request.method == 'POST':
+
+        userStatusData = JSONParser().parse(request)
+
+        accountStatus = userStatusData['status']
+        voterUsername = userStatusData['voter']
+        print(accountStatus, voterUsername)
+
+        user = User.objects.get(username=voterUsername)
+        voter = Voter.objects.filter(user = user).update(status = accountStatus)
+
+        return JsonResponse("User Account Status changed", safe=False)

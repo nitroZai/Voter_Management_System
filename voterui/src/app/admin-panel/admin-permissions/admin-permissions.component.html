@@ -1,0 +1,60 @@
+<br><br>
+
+<div class="container" style="width: 70%">
+    <form action="" method="post">
+    
+        <input class='form-control' type="text" name="search" placeholder="Search...">
+        <br>
+        <input type="submit" class="btn btn-block btn-dark"value="Search">
+    
+    </form>
+</div>
+
+<br><br>
+<div class="container">
+    <table class="table table-striped table-hover table-bordered table-responsive">
+        <tr class="table-dark" style="color: black">
+          <th>Username</th>
+          <th>Area</th>
+          <th>Admin?</th>
+          <th>Voted?</th>
+          <th>Status</th>
+        </tr>
+
+            <tr *ngFor="let voter of voters">
+                <td>{{voter.user}}</td>
+                <td>{{voter.area}}</td>
+                <td>
+                   
+                    <!-- Admin Permissions -->
+                    <br>
+                    <form (ngSubmit)="onAdminRightsSubmit(adminReference, voter)" #adminReference="ngForm">
+                        <div>{{voter.is_admin}}</div>
+                        <select name="adminRights" ngModel>
+                            <option value="True"> True </option>
+                            <option value="False"> False </option>
+                        </select>
+                        
+                        <input type="submit" value="Change Rights">
+                    </form>
+                </td>
+                <td>{{voter.is_voted}}</td>
+                <td>
+                    
+                    <!-- Account Status Change -->
+                    <br>
+                    <form method="post" (ngSubmit)="onAdminUserStatusSubmit(adminStatusReference, voter)" #adminStatusReference="ngForm">
+                        <div>{{voter.status}}</div>
+                        <select name="statusChange" ngModel>
+                            <option value="Choose"> Choose one </option>
+                            <option value="Accepted"> Accepted </option>
+                            <option value="Denied"> Denied </option>
+                        </select>
+                        
+                        <input type="submit" value="Change Status">
+                    </form>
+                </td>
+            </tr>
+    
+    </table>
+</div>

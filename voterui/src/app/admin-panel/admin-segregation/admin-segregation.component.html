@@ -1,0 +1,60 @@
+<br>
+<div class="container">
+    <h2>Voted:</h2>
+</div>
+
+<br>
+<div class="container">
+    <table class="table table-striped table-hover table-bordered table-responsive">
+        <tr class="table-dark" style="color: black;">
+          <th>Username</th>
+          <th>Area</th>
+          <th>Admin?</th>
+          <th>Voted?</th>
+          <th>Status</th>
+        </tr>
+    
+         <tr *ngFor="let voter of voters" >
+            <ng-container *ngIf="voter.is_voted == false">
+                <td>{{voter.user}}</td>
+                <td>{{voter.area}}</td>
+                <td>{{voter.is_admin}}</td>
+                <td>
+                    {{voter.is_voted}}
+                </td>
+                <td>{{voter.status}}</td>
+            </ng-container>
+        </tr>
+    </table>
+</div>
+
+<br>
+
+<div class="container">
+    <h2>Non-Voted:</h2>
+</div>
+
+<br>
+<div class="container">
+    <table class="table table-striped table-hover table-bordered table-responsive">
+        <tr class="table-dark" style="color: black;">
+            <th>Username</th>
+            <th>Area</th>
+            <th>Admin?</th>
+            <th>Voted?</th>
+            <th>Status</th>
+          </tr>
+    
+        <tr *ngFor="let voter of voters" style="color: black;">
+            <ng-container *ngIf="voter.is_voted == true">
+                <td>{{voter.user}}</td>
+                <td>{{voter.area}}</td>
+                <td>{{voter.is_admin}}</td>
+                <td>
+                    {{voter.is_voted}}
+                </td>
+                <td>{{voter.status}}</td>   
+            </ng-container>
+        </tr>
+    </table>
+</div>
