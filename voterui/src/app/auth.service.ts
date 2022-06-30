@@ -9,7 +9,6 @@ export class AuthService {
 
   constructor( private http: HttpClient) { }
 
-
   baseUrl = 'http://localhost:8000/'
 
   getAllAreas(): Observable<any[]>{
