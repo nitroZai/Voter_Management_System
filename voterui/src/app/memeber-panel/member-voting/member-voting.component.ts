@@ -1,5 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/auth.service';
+import { LoginPanelService } from 'src/app/services/login-panel.service';
 import { MemberPanelService } from 'src/app/services/member-panel.service';
 
 @Component({
@@ -14,14 +16,13 @@ export class MemberVotingComponent implements OnInit {
   selectedCandidateName!: {candidateName: string};
   userToken: any = localStorage.getItem('userToken');
 
-  constructor(private memberPanelService: MemberPanelService, private router: Router) { }
+  constructor(private memberPanelService: MemberPanelService, private router: Router, private authService: AuthService, private loginService: LoginPanelService) { }
 
   user!: string
   userIsVoted = localStorage.getItem('userIsVoted') === 'true' ? true : false;
 
   ngOnInit(): void {
 
-      
     console.log(localStorage.getItem('userToken'))
 
     this.memberPanelService.getAllCandidates().subscribe(
@@ -38,17 +39,24 @@ export class MemberVotingComponent implements OnInit {
 
   onSubmitVoteData(){
 
-    const data = {
-      candidateName: this.candidateName.nativeElement.value,
-      username: JSON.parse(this.userToken)
-    }      
+  this.authService.apiJWTUser().subscribe({
+    next: (res: any) => {
 
-    this.memberPanelService.onVoteSubmit(data).subscribe({
-      next: (res) => {
-        console.log(res)
-        this.router.navigate(['apiMember/apiMemberSuccess'])
+      const data = {
+        candidateName: this.candidateName.nativeElement.value,
+        username: res.username
       }
-    })
+    
+      this.memberPanelService.onVoteSubmit(data).subscribe({
+        next: (res) => {
+          console.log(res)
+          this.router.navigate(['apiMember/apiMemberSuccess'])
+        }
+      })
+    }
+  })
+
+    
   }
 
 

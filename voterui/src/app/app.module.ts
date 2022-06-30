@@ -2,8 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AuthService } from './auth.service';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';	
-
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -18,6 +17,7 @@ import { HomeComponent } from './home/home.component';
 import { MemberVotingComponent } from './memeber-panel/member-voting/member-voting.component';
 import { AdminHomeComponent } from './admin-panel/admin-home/admin-home.component';
 import { MemberNotVerifiedComponent } from './memeber-panel/member-not-verified/member-not-verified.component';
+import { AuthInterceptor } from './interceptors/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -41,7 +41,11 @@ import { MemberNotVerifiedComponent } from './memeber-panel/member-not-verified/
     FormsModule,
     HttpClientModule
   ],
-  providers: [AuthService],
+  providers: [AuthService, {
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptor,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

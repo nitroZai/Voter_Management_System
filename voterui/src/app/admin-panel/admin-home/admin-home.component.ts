@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { AuthService } from 'src/app/auth.service';
 
 @Component({
   selector: 'app-admin-home',
@@ -7,13 +8,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminHomeComponent implements OnInit {
 
-  adminName!: string;
+  @Input() adminName!: string;
 
-  constructor() { }
+  constructor(private authService: AuthService) { }
   
   ngOnInit(): void {
 
-    this.adminName = JSON.stringify(localStorage.getItem('userToken'));
+    this.authService.apiJWTUser().subscribe({
+      next: (res: any) => {
+
+        this.adminName = res.username
+
+      }
+    })
     
   }
 

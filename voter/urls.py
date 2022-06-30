@@ -1,12 +1,21 @@
 from django.urls import path
-from . import views, apiViews
+from . import views, apiViews, apiJWTViews
 from django.conf.urls.static import static
 from hub import settings
 
 urlpatterns = [
+
+    path('apiJWTLogin', apiJWTViews.jwtLoginAPIView.as_view()),
+    path('apiJWTRegister', apiJWTViews.jwtRegisterAPIView.as_view()),
+    path('apiJWTLogout', apiJWTViews.jwtLogoutAPIView.as_view()),
+    path('apiJWTUser', apiJWTViews.jwtUserAPIView.as_view()),
+    path('apiJWTRefresh', apiJWTViews.jwtRefreshAPIView.as_view()),
+    # path('apiJWTRegister', apiJWTViews.jwtRegisterAPIView),
+    path('apiLoginCheck', apiViews.apiLoginCheck),
     path('apiLogin', apiViews.apiLogin),
     path('apiRegister', apiViews.apiRegister),
     path('apiLoginCheck', apiViews.apiLoginCheck),
+    path('apiGetVoter', apiViews.apiGetVoter),
     path('apiAllCandidates', apiViews.apiAllCandidates),
     path('apiAnalytics', apiViews.apiAnalytics),
     path('apiSegregations', apiViews.apiSegregations),

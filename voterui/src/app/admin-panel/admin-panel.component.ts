@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../auth.service';
 import { AdminPanelService } from '../services/admin-panel.service';
 
 @Component({
@@ -9,14 +10,12 @@ import { AdminPanelService } from '../services/admin-panel.service';
 })
 export class AdminPanelComponent implements OnInit {
 
-  constructor(private router: Router, private adminPanelService: AdminPanelService) { }
+  constructor(private router: Router, private adminPanelService: AdminPanelService, private authService: AuthService) { }
 
   adminName!: string;
   candidates!: {candidate_name: string, votes: number, area: string} [];
 
   ngOnInit(): void {
-
-    this.adminName = JSON.stringify(localStorage.getItem('userToken'));
     
   }
 
@@ -44,8 +43,12 @@ export class AdminPanelComponent implements OnInit {
   }
 
   onLogout(){
-
-    localStorage.removeItem('userToken');
+        
+    this.authService.apiJWTLogout().subscribe({
+      next: (res) => {
+        console.log(res);
+      }
+    })
     this.router.navigate([''])
 
   }

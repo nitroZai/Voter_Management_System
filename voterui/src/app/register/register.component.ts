@@ -25,8 +25,10 @@ export class RegisterComponent implements OnInit {
 
   username!: string
   email!: string
-  confirmPassword!: string
+  password_confirm!: string
   password!: string
+  first_name!: string
+  last_name!: string
 
   passwordSmall!: string
   usernameSmall!: string
@@ -56,6 +58,14 @@ export class RegisterComponent implements OnInit {
 
   }
 
+  onFirstname(event: any){
+    this.first_name = (event.target as HTMLInputElement).value;
+  }
+
+  onLastname(event: any){
+    this.last_name = (event.target as HTMLInputElement).value;
+  }
+
   onEmail(event: any){
     this.email = (event.target as HTMLInputElement).value;
 
@@ -76,7 +86,7 @@ export class RegisterComponent implements OnInit {
   onPassword(event: any){
     this.password = (event.target as HTMLInputElement).value;
   
-    if (this.password == this.confirmPassword){
+    if (this.password == this.password_confirm){
 
       this.passwordSmall = "Password Matched!"
       this.renderer.setStyle(
@@ -95,9 +105,9 @@ export class RegisterComponent implements OnInit {
   }
 
   onConfirmPassword(event: any){
-    this.confirmPassword = (event.target as HTMLInputElement).value;
+    this.password_confirm = (event.target as HTMLInputElement).value;
 
-    if (this.password == this.confirmPassword){
+    if (this.password == this.password_confirm){
 
       this.passwordSmall = "Password Matched!"
       this.renderer.setStyle(
@@ -123,7 +133,10 @@ export class RegisterComponent implements OnInit {
       username: this.username,
       email: this.email,
       area: this.onArea.nativeElement.value,
-      password: this.password
+      password: this.password,
+      password_confirm: this.password_confirm,
+      first_name: this.first_name,
+      last_name: this.last_name,
 
     }
 

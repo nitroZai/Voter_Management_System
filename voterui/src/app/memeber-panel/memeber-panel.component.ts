@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../auth.service';
 import { MemberPanelService } from '../services/member-panel.service';
 
 @Component({
@@ -10,15 +11,19 @@ import { MemberPanelService } from '../services/member-panel.service';
 export class MemeberPanelComponent implements OnInit {
 
 
-  constructor(private memberPanelService: MemberPanelService, private router: Router) { }
+  constructor(private router: Router, private authService: AuthService) { }
 
   ngOnInit(): void {
   }
     onLogout(){
-     
-        localStorage.removeItem('userToken')
-        this.router.navigate([''])
-
+    
+      this.authService.apiJWTLogout().subscribe({
+        next: (res) => {
+          console.log(res);
+        }
+      })
+      this.router.navigate([''])
+    
     }  
 
 }

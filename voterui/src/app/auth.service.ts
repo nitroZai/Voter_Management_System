@@ -7,20 +7,38 @@ import { HttpClient } from '@angular/common/http';
 })
 export class AuthService {
 
+  accessToken = ''; 
+
   constructor( private http: HttpClient) { }
 
   baseUrl = 'http://localhost:8000/'
 
   getAllAreas(): Observable<any[]>{
-      return this.http.get<any[]>(this.baseUrl + 'apiRegister')
+      return this.http.get<any[]>(this.baseUrl + 'apiJWTRegister')
   }
 
-  loginServiceVerification(data: any): Observable<any>{ 
-    return this.http.post(this.baseUrl + 'apiLogin', data)
+  loginServiceVerification(data: any){ 
+    return this.http.post(this.baseUrl + 'apiJWTLogin', data, {withCredentials: true})
   }
 
   registrationService(data: any): Observable<any[]>{
-    return this.http.post<any>(this.baseUrl + 'apiRegister', data)
+    return this.http.post<any>(this.baseUrl + 'apiJWTRegister', data)
+  }
+
+  apiJWTUser() {
+    return this.http.get(this.baseUrl + 'apiJWTUser');
+  }
+
+  // refresh() {
+  //   return this.http.post(`${environment.api}/refresh`, {}, {withCredentials: true});
+  // }
+
+  apiJWTLogout() {
+    return this.http.post(this.baseUrl + 'apiJWTLogout', {}, {withCredentials: true});
+  }
+
+  apiJWTRefresh() {
+    return this.http.post(this.baseUrl + 'apiJWTRefresh', {}, {withCredentials: true});
   }
 
 }

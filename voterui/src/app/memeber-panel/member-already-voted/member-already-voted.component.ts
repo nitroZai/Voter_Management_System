@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/auth.service';
 
 @Component({
   selector: 'app-member-already-voted',
@@ -8,14 +9,27 @@ import { Router } from '@angular/router';
 })
 export class MemberAlreadyVotedComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private authService: AuthService) { }
+
+  name = '';
 
   ngOnInit(): void {
+  
+    this.authService.apiJWTUser().subscribe({
+      next: (res: any) => {
+        this.name = res.first_name
+      }
+    })
+  
   }
 
   onLogout(){
     
-    localStorage.removeItem('userToken');
+    this.authService.apiJWTLogout().subscribe({
+      next: (res) => {
+        console.log(res);
+      }
+    })
     this.router.navigate([''])
 
   }

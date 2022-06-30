@@ -5,6 +5,22 @@
       <form>
         <br /><br />
 
+        <label for="name">First Name</label>
+        <input
+          class="form-control"
+          type="text"
+          (input)="onFirstname($event)"
+          required
+        />
+
+        <label for="name">Last Name</label>
+        <input
+          class="form-control"
+          type="text"
+          (input)="onLastname($event)"
+          required
+        />
+
         <label for="name">Username</label>
         <input
           class="form-control"

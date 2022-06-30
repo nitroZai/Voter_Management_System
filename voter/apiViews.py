@@ -1,3 +1,4 @@
+import email
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
@@ -9,6 +10,17 @@ from django.contrib.auth import authenticate
 
 from .models import *
 
+@api_view(['GET', 'POST'])
+def apiGetVoter(request):
+
+    if request.method == 'POST':
+
+        username = request.data['username']
+        user = User.objects.get(username=username)
+        voter = Voter.objects.get(user = user)
+
+        return JsonResponse({'is_admin': voter.is_admin, 'status': voter.status, 'is_voted': voter.is_voted})
+
 
 @csrf_exempt
 @api_view(['GET','POST'])
@@ -18,10 +30,13 @@ def apiLogin(request):
 
         print(request)
 
-        userData = JSONParser().parse(request)
+        # userData = JSONParser().parse(request)
         
-        username = userData['username']
-        password = userData['password']
+        # username = userData['username']
+        # password = userData['password']
+
+        username = request.data['username']
+        password = request.data['password']
 
         print(username, password)
 

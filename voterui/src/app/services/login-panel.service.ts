@@ -12,8 +12,12 @@ export class LoginPanelService {
   baseUrl = 'http://localhost:8000/'
 
 
-  checkingAdminOrNot(data: string): Observable<any>{
+  checkingAdminOrNot(data: any): Observable<any>{
     return this.http.post(this.baseUrl + 'apiLoginCheck', data)
+  }
+
+  apiGetVoter(data: any){
+    return this.http.post(this.baseUrl + 'apiGetVoter', data)
   }
 
 }
