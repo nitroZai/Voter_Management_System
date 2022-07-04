@@ -1,3 +1,99 @@
+<div class="container">
+  <br><br>
+  <div class="alert alert-danger" role="alert" *ngIf="backendErrorBoolean === true">
+    {{backendErrorMessage}}
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="onReactiveFormSubmit()">
+  
+          First Name:
+          <input
+            class="form-control"
+            type="text" formControlName="first_name"/>
+            <b><small [ngStyle]="{'color': '#F24C4C'}" *ngIf="first_name && first_name.invalid && first_name.touched; else first_name_else">Invalid Firstname</small></b>
+            <b>
+              <ng-template #first_name_else> <small [ngStyle]="{'color': '#3EC70B'}">Valid First Name</small></ng-template>
+            </b>
+            <br><br>
+  
+          Last Name:
+          <input
+            class="form-control"
+            type="text" formControlName="last_name"/>
+            <b><small [ngStyle]="{'color': '#F24C4C'}" *ngIf="last_name && last_name.invalid && last_name.touched; else last_name_else">Invalid Lastname</small></b>
+            <b>
+              <ng-template #last_name_else> <small [ngStyle]="{'color': '#3EC70B'}">Valid Last Name</small></ng-template>
+            </b>
+            <br>
+        <br>
+
+        Username:
+          <input
+            class="form-control"
+            type="text" formControlName="username"/>
+            <b><small [ngStyle]="{'color': '#F24C4C'}" *ngIf="username && username.invalid && username.touched; else username_else">Invalid username</small></b>
+            <b>
+              <ng-template #username_else> <small [ngStyle]="{'color': '#3EC70B'}">Valid Username</small></ng-template>
+            </b>
+            <br>
+  <br>
+            Email:
+          <input
+            class="form-control"
+            type="text" formControlName="email"/>
+            <b><small [ngStyle]="{'color': '#F24C4C'}" *ngIf="email && email.invalid && email.touched; else email_else">Invalid Email</small></b>
+            <b>
+              <ng-template #email_else> <small [ngStyle]="{'color': '#3EC70B'}">Valid Email</small></ng-template>
+            </b>
+            <br>
+  
+<br>
+
+            Choose your Area:
+        <select
+          formControlName="area"
+          class="form-control custom-select custom-select-lg mb-3"
+
+        >
+          <option *ngFor="let item of areaData" value="{{item.area}}">{{item.area}}</option>
+        </select>
+              <b><small [ngStyle]="{'color': '#F24C4C'}" *ngIf="area && area.invalid && area.touched; else area_else">Invalid Area</small></b>
+        <br>
+        <b>
+          <ng-template #area_else> <small [ngStyle]="{'color': '#3EC70B'}">Valid Area</small></ng-template>
+        </b>
+        <br>
+
+            Password:
+          <input
+            class="form-control"
+            type="password" 
+            formControlName="password"/>
+            <b><small [ngStyle]="{'color': '#F24C4C'}" *ngIf="password && password.invalid && password.touched; else password_else">Invalid Password</small></b>
+            <b>
+              <ng-template #password_else> <small [ngStyle]="{'color': '#3EC70B'}">Valid Password</small></ng-template>
+            </b>
+            <br>
+  
+  <br>
+
+            Confirm Password:
+          <input
+            class="form-control"
+            type="password" formControlName="password_confirm"/>
+            <br>
+            <b><small [ngStyle]="{'color': '#F24C4C'}" *ngIf="password_confirm && password_confirm.invalid && password_confirm.touched">Invalid Password</small></b>
+            <b><small [ngStyle]="{'color': '#F24C4C'}" *ngIf="form.errors?.['mismatch']; else password_confirm_else">Password Doesn't Match</small></b>
+            <b>
+              <ng-template #password_confirm_else> <small [ngStyle]="{'color': '#3EC70B'}">Valid Confirm Password</small></ng-template>
+            </b>
+            <br>
+
+            <button class="btn btn-primary" [disabled]="form.invalid">Register</button>
+
+  </form>
+</div>
+<!-- 
 <br /><br />
     <div class="container">
       <h2>Registration Form</h2>
@@ -71,6 +167,6 @@
         <br>
         <br />
 
-        <button class="btn btn-block btn-primary" (click)="onRegisterSubmit()">Submit</button>
+        <button class="btn btn-block btn-primary" [disabled]="!submitButtonBoolean" (click)="onRegisterSubmit()">Submit</button>
           
-      </form>
+      </form> -->

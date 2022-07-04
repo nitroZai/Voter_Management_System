@@ -34,4 +34,10 @@ export class AdminPanelService {
 
   }
 
+  onAdminPermissionSearch(data: any): Observable<any[]>{
+
+    return this.http.post<any[]>(this.baseUrl + 'apiAdminPermissionsSearch', data)
+
+  }
+
 }

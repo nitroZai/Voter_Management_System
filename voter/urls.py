@@ -20,6 +20,7 @@ urlpatterns = [
     path('apiAnalytics', apiViews.apiAnalytics),
     path('apiSegregations', apiViews.apiSegregations),
     path('apiAdminPermissions', apiViews.apiAdminPermissions),
+    path('apiAdminPermissionsSearch', apiViews.apiAdminPermissionsSearch),
     path('apiAdminUserStatus', apiViews.apiAdminUserStatus),
     path('', views.home, name="home"),
     path('register/', views.register, name="register"),

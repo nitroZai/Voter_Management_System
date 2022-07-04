@@ -18,6 +18,9 @@ export class LoginComponent implements OnInit {
   username!: any;
   password!: string;
 
+  backendErrorBoolean = false
+  backendErrorMessage = ''
+
   onUsernameChange(event: any){
     this.username = (event.target as HTMLInputElement).value;
   }
@@ -42,7 +45,7 @@ export class LoginComponent implements OnInit {
 
         this.authService.apiJWTUser().subscribe({
           next: (res: any)=> {
-
+            this.backendErrorBoolean = false;
             const data = {
               username: res.username
             }
@@ -73,9 +76,8 @@ export class LoginComponent implements OnInit {
     
       },
       error: (res) => {
-        
-        this.router.navigate([''])
-
+        this.backendErrorBoolean = true;
+        this.backendErrorMessage = res.error.detail
       }
     })
 

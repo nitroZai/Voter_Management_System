@@ -25,13 +25,21 @@ class jwtRegisterAPIView(APIView):
         first_name = userData['first_name']
         last_name = userData['last_name']
         password = userData['password']
+        password_confirm = userData['password_confirm']
         email = userData['email']
         area = userData['area']
 
         if userData['password'] != userData['password_confirm']:
             raise exceptions.APIException('Password do not match')
 
-        
+        if User.objects.filter(username=username).exists():
+            raise exceptions.APIException('User already Exists')
+
+        if len(username) < 3 & len(first_name) < 3 & len(last_name) < 3:
+            raise exceptions.APIException('Length of names is less than the requirement')
+
+        if len(password) < 3:
+            raise exceptions.APIException('Length of the password cannot be less than 3')
 
         data = {
             'first_name': first_name,
@@ -82,15 +90,29 @@ class jwtLoginAPIView(APIView):
         print(username, password)
 
         # user = User.objects.get(email=email)
+
+        if User.objects.filter(username=username).exists():
+            
+            user = User.objects.get(username = username)
+            userPasswordChecker = user.check_password(password)
+
+            if not userPasswordChecker:
+                raise exceptions.APIException('Wrong Password!')
+            
+        else:
+            raise exceptions.APIException('Username doesn"t exist, Try again')
+
+
+
         user = User.objects.get(username = username)
         userPasswordChecker = user.check_password(password)
         print(userPasswordChecker)
 
-        if user is None:
-            raise exceptions.AuthenticationFailed('invalid Credentials')
+        # if user is None:
+        #     raise exceptions.AuthenticationFailed('invalid Credentials')
 
-        if not userPasswordChecker:
-            raise exceptions.AuthenticationFailed('Invalid Credentials')
+        # if not userPasswordChecker:
+        #     raise exceptions.AuthenticationFailed('Invalid Credentials')
 
         access_token = create_access_token(user.id)
         refresh_token = create_refresh_token(user.id)

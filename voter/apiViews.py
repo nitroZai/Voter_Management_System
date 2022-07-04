@@ -7,6 +7,7 @@ from .serializers import UserSerializer, VoterSerializer, AreaSerializer, Candid
 from django.contrib.auth.models import User
 from .models import *
 from django.contrib.auth import authenticate
+from django.db.models import Q
 
 from .models import *
 
@@ -168,17 +169,13 @@ def apiSegregations(request):
         return JsonResponse(voterSerial.data, safe=False)
 
 
-# def apiPermissions(request):
+def apiPermissions(request):
 
-#     if request.method == "GET":
+    if request.method == "GET":
         
-#         voters = Voter.objects.all()
-#         voterSerial = VoterSerializer(voters, many= True)
-#         return JsonResponse(voterSerial.data, safe=False)
-
-#     elif request.method == "POST":
-
-#         search = request.data['search']
+        voters = Voter.objects.all()
+        voterSerial = VoterSerializer(voters, many= True)
+        return JsonResponse(voterSerial.data, safe=False)
 
 @api_view(['GET', 'POST'])
 def apiAdminPermissions(request):
@@ -213,3 +210,21 @@ def apiAdminUserStatus(request):
         voter = Voter.objects.filter(user = user).update(status = accountStatus)
 
         return JsonResponse("User Account Status changed", safe=False)
+
+@api_view(['GET', 'POST'])
+def apiAdminPermissionsSearch(request):
+
+    if request.method == 'POST':
+
+        searchData = JSONParser().parse(request)
+
+        searchField = searchData['searchField']
+        print(searchField)
+        users = User.objects.filter(username__icontains = searchField)
+        # areas = Area.objects.filter(area__icontains = searchField)
+        voters = Voter.objects.filter(user__in = users)
+
+        voterSerial = VoterSerializer(voters, many = True)
+
+        return JsonResponse(voterSerial.data, safe=False)
+

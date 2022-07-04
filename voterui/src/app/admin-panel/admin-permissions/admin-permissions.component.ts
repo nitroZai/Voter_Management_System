@@ -16,27 +16,57 @@ export class AdminPermissionsComponent implements OnInit {
 
   @ViewChild('adminRights') adminRights!: ElementRef;
 
+  searchBoolean = false
+  searchField = ''
+
   ngOnInit(): void {
   
-  this.adminPanelService.onAdminSegregation().subscribe({
-      
-    next: (res) => {
-      console.log(res);
-      this.voters = res;
-    }
+  if (this.searchBoolean === false) {  
+    this.adminPanelService.onAdminSegregation().subscribe({
+        
+      next: (res) => {
+        console.log(res);
+        this.voters = res;
+        
+      }
 
-  })
+    })
+  }else{
+    this.adminPanelService.onAdminPermissionSearch({'searchField': this.searchField}).subscribe({
+      next: (res: any) => {
+        console.log(res)
+        this.voters = res
+      },
+      error: (err: any) => {
+console.log(err)
+      }
+    })
+  }
 
 }  
   onSubmitAdmin(event: any, voter: any){
-
+    this.searchBoolean = false
     console.log(voter, (event.target as HTMLInputElement).value, this.adminRights.nativeElement.value)
 
   }
 
+  onSearchSubmit(searchReference: NgForm){
+    this.searchBoolean = true
+    this.searchField = searchReference.value.searchField
+    console.log(this.searchField)
+
+    if (this.searchField === ''){
+      this.searchBoolean = true
+    }
+
+    this.ngOnInit()
+    // const data = {
+    //   searchField: searchReference.value.searchField
+    // }
+  }
 
   onAdminUserStatusSubmit(adminStatusReference: NgForm, voter: any){
-
+    this.searchBoolean = false
     let formRightsData = adminStatusReference.value.statusChange
     console.log(formRightsData)
     let voterTemp = voter.user
@@ -49,13 +79,14 @@ export class AdminPermissionsComponent implements OnInit {
     this.adminPanelService.onAdminUserStatus(data).subscribe({
       next:(res) => {
         console.log(res)
+        this.ngOnInit()
       }
     })
 
   }
 
   onAdminRightsSubmit(adminReference: NgForm, voter: any){
-
+    this.searchBoolean = false
     let formRightsData = adminReference.value.adminRights
     console.log(formRightsData)
 
@@ -77,6 +108,7 @@ export class AdminPermissionsComponent implements OnInit {
     this.adminPanelService.onAdminPermission(data).subscribe({
       next: (res)=>{
         console.log(res)
+        this.ngOnInit()
       }
     })
   

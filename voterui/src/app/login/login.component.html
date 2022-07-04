@@ -1,6 +1,12 @@
 
 <div class="container">
     
+    <br><br>
+  <div class="alert alert-danger" role="alert" *ngIf="backendErrorBoolean === true">
+    {{backendErrorMessage}}
+  </div>
+
+
     <form class="form-group">
     
         <label for="username">UserName</label>

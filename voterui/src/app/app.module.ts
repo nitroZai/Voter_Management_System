@@ -18,6 +18,7 @@ import { MemberVotingComponent } from './memeber-panel/member-voting/member-voti
 import { AdminHomeComponent } from './admin-panel/admin-home/admin-home.component';
 import { MemberNotVerifiedComponent } from './memeber-panel/member-not-verified/member-not-verified.component';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [AuthService, {
     provide: HTTP_INTERCEPTORS,
