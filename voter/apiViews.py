@@ -112,6 +112,29 @@ def apiLoginCheck(request):
 
             return JsonResponse(True, safe= False)
 
+@api_view(['GET', 'POST'])
+def apiGetSpecificLocationCandidates(request):
+    
+    if request.method == 'POST':
+        
+        # Get the Username
+        # Using User's Location, Get the candidates
+
+        userData = JSONParser().parse(request)
+
+        username = userData['user']
+
+        user = User.objects.get(username= username)
+        voter = Voter.objects.get(user = user)
+        print(voter)
+        voterArea = Area.objects.get(area = voter.area.area)
+        print(voterArea)
+        candidates = Candidate.objects.filter(area = voterArea)
+        print(candidates)
+        candidateSerial = CandidateSerializer(candidates, many = True)
+
+        return JsonResponse(candidateSerial.data, safe=False)
+
 @csrf_exempt
 @api_view(['GET', 'POST'])
 def apiAllCandidates(request):

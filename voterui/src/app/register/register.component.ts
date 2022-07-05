@@ -29,8 +29,12 @@ export class RegisterComponent implements OnInit {
           '[a-z0-9]+$'
         )]),
         email: new FormControl('', [Validators.required, Validators.email]),
-        password: new FormControl('', [Validators.required, Validators.minLength(3)]),
-        password_confirm: new FormControl('', [Validators.required, Validators.minLength(3)]),
+        password: new FormControl('', [Validators.required, Validators.minLength(3), Validators.pattern(
+          '[a-z0-9]+$'
+        )], ),
+        password_confirm: new FormControl('', [Validators.required, Validators.minLength(3), Validators.pattern(
+          '[a-z0-9]+$'
+        )]),
         area: new FormControl('', [Validators.required]),
       }, {
         // validators: this.passwordMatchValidator('password', 'password_confirm')

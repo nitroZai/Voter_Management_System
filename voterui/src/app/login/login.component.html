@@ -7,17 +7,19 @@
   </div>
 
 
-    <form class="form-group">
+    <form class="form-group" (ngSubmit)="onLoginVerification()"  [formGroup]="form" >
     
         <label for="username">UserName</label>
-        <input type="text" class="form-control"  (input) = "onUsernameChange($event)">
+        <input type="text" class="form-control" formControlName="username">
+        <b><small [ngStyle]="{'color': '#F24C4C'}" *ngIf="username && username.invalid && username.touched">Required</small></b>
         <br>
         <br>
         <label for="password">Password</label>
-        <input type="password" class="form-control"  (input) = "onPasswordChange($event)">
+        <input formControlName="password" type="password" class="form-control" >
+        <b><small [ngStyle]="{'color': '#F24C4C'}" *ngIf="password && password.invalid && password.touched">Required</small></b>
     <br>
     
-        <button class="btn btn-primary" (click)="onLoginVerification()" >
+        <button class="btn btn-primary" [disabled]="form.invalid" (click)="onLoginVerification()" >
             Login
         </button>
     </form>

@@ -17,6 +17,7 @@ urlpatterns = [
     path('apiLoginCheck', apiViews.apiLoginCheck),
     path('apiGetVoter', apiViews.apiGetVoter),
     path('apiAllCandidates', apiViews.apiAllCandidates),
+    path('apiGetSpecificLocationCandidates', apiViews.apiGetSpecificLocationCandidates),
     path('apiAnalytics', apiViews.apiAnalytics),
     path('apiSegregations', apiViews.apiSegregations),
     path('apiAdminPermissions', apiViews.apiAdminPermissions),

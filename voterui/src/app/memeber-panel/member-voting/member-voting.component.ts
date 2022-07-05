@@ -23,17 +23,31 @@ export class MemberVotingComponent implements OnInit {
 
   ngOnInit(): void {
 
-    console.log(localStorage.getItem('userToken'))
+    // console.log(localStorage.getItem('userToken'))
 
-    this.memberPanelService.getAllCandidates().subscribe(
-      {
-        next: (res) => {
-          console.log(res)
-          this.candidates = res
+    // this.memberPanelService.getAllCandidates().subscribe(
+    //   {
+    //     next: (res) => {
+    //       console.log(res)
+    //       this.candidates = res
+    //     }
+    //   }
+
+    // )
+    this.authService.apiJWTUser().subscribe({
+      next: (res: any) => {
+        const data = {
+          'user': res.username
         }
+    
+        this.memberPanelService.onGettingSpecificCandidates(data).subscribe({
+          next: (res: any) => {
+            this.candidates = res
+          }
+        })
       }
-
-    )
+    })
+    
 
   }
 

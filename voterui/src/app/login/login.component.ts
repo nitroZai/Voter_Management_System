@@ -1,4 +1,5 @@
 import { Component, OnInit, ElementRef, ViewChild, DoCheck } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { LoginPanelService } from '../services/login-panel.service';
@@ -15,25 +16,38 @@ export class LoginComponent implements OnInit {
     private loginService: LoginPanelService,
     private router: Router) { }
 
-  username!: any;
-  password!: string;
+  // username!: any;
+  // password!: string;
+
+  form = new FormGroup({
+    username: new FormControl('', [Validators.required, Validators.minLength(3), Validators.pattern('[a-z0-9]+$')]),
+    password: new FormControl('', [Validators.required, Validators.minLength(3), Validators.pattern('[a-z0-9@%$]+$')]) 
+  })
+
+  get username() {
+    return this.form.get('username')
+  }
+
+  get password() {
+    return this.form.get('password')
+  }
 
   backendErrorBoolean = false
   backendErrorMessage = ''
 
-  onUsernameChange(event: any){
-    this.username = (event.target as HTMLInputElement).value;
-  }
+  // onUsernameChange(event: any){
+  //   this.username = (event.target as HTMLInputElement).value;
+  // }
 
-  onPasswordChange(event: any){
-    this.password = (event.target as HTMLInputElement).value;
-  }
+  // onPasswordChange(event: any){
+  //   this.password = (event.target as HTMLInputElement).value;
+  // }
 
   onLoginVerification(){
 
     const data = {
-      username: this.username
-      ,password: this.password
+      username: this.form.value.username
+      ,password: this.form.value.password
     }
 
     console.log(data)

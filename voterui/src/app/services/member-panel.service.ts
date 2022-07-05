@@ -20,4 +20,9 @@ export class MemberPanelService {
   onVoteSubmit(data: any): Observable<any>{
     return this.http.post<any>(this.baseUrl + 'apiAllCandidates', data)
   }
+
+  
+  onGettingSpecificCandidates(data: any){
+    return this.http.post(this.baseUrl + 'apiGetSpecificLocationCandidates' , data)
+  }
 }
