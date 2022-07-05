@@ -48,7 +48,7 @@ class Voter(models.Model):
     is_voted   = models.BooleanField(default=False)
     status     = models.CharField(max_length=10, default=ACCEPTED, choices=STATUS_CHOICES)
     area       = models.ForeignKey(Area, on_delete=models.PROTECT)
-
+    
 class Candidate(models.Model):
     candidate_name = models.CharField(max_length=50)
     votes          = models.IntegerField()
