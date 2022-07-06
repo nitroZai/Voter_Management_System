@@ -1,0 +1,31 @@
+<!-- <br>
+
+<div class="d-flex align-items-center justify-content-center">
+    
+    <div class="card  text-white bg-dark mb-3"  *ngFor="let candidateCampaign of candidateCampaigns">
+        
+            <div class="card-body">
+              <h5 class="card-title">Political Campaign</h5>
+              <p class="card-text">{{candidateCampaign.message}}</p>
+              
+            </div>
+            <div class="card-footer text-muted">
+                {{candidateCampaign.created_at}}
+              </div>
+        
+      </div>
+
+
+</div> -->
+
+
+<div class="card text-center d-flex align-items-center bg-dark text-white my-3 py-2 " style="width: 18rem;" *ngFor="let candidateCampaign of candidateCampaigns">
+  <div class="card-body">
+    <h6 class="card-title">{{candidateCampaign.message}}</h6>
+    
+    <p class="card-text bg-danger">{{candidateCampaign.created_at}}</p>
+    
+    <small class="card-text">{{candidateCampaign.candidate}}</small>
+  </div>
+</div>
+

@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
+import { LoginPanelService } from '../services/login-panel.service';
 import { MemberPanelService } from '../services/member-panel.service';
 
 @Component({
@@ -11,7 +12,9 @@ import { MemberPanelService } from '../services/member-panel.service';
 export class MemeberPanelComponent implements OnInit {
 
 
-  constructor(private router: Router, private authService: AuthService) { }
+  constructor(private router: Router, private authService: AuthService, private loginService: LoginPanelService) { }
+
+  username = '';
 
   ngOnInit(): void {
   }
@@ -25,5 +28,30 @@ export class MemeberPanelComponent implements OnInit {
       this.router.navigate([''])
     
     }  
+
+    onPoliticalCampaigns(){
+      this.router.navigate(['apiMember/apiMemberPoliticalCampaigns'])
+    }
+
+    onMemberHome(){
+      this.authService.apiJWTUser().subscribe({
+        next: (response: any) => {
+          
+          const data = {
+            username: response.username
+          }
+
+          this.loginService.apiGetVoter(data).subscribe({
+            next: (response: any) => {
+              if (response.is_voted){
+                this.router.navigate(['apiMember/apiMemberAlreadyVoted'])
+              }else{
+                this.router.navigate(['apiMember/apiMemberHome'])
+              }
+            }
+          })
+        }
+      })
+    }
 
 }

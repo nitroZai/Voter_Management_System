@@ -86,8 +86,36 @@ class CandidateSerializer(serializers.ModelSerializer):
         model = Candidate
         fields = (
 
+            'candidate_username',
             'candidate_name',
             'votes',
             'area'
 
         )
+
+class CandidateCampaignSerializer(serializers.ModelSerializer):
+
+    candidate = serializers.SlugRelatedField(
+        read_only=True,
+        slug_field='candidate_name'
+    )
+
+    class Meta: 
+
+        model = CandidateCampaigns
+        fields = (
+            'candidate',
+            'message',
+            'likes',
+            'created_at'
+        )        
+
+class CandidateCampaignCommentSerializer(serializers.ModelSerializer):
+
+    class Meta: 
+
+        model = CandidateComments
+        fields = (
+            'candidateCampaign',
+            'comment'
+        )        

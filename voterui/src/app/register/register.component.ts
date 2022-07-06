@@ -20,10 +20,10 @@ export class RegisterComponent implements OnInit {
     form = this.formBuilder.group(
       {
         first_name: new FormControl('', [Validators.required, Validators.minLength(3), Validators.pattern(
-          '[a-z]+$'
+          '[a-zA-Z]+$'
         )]),
         last_name: new FormControl('', [Validators.required, Validators.minLength(3), Validators.pattern(
-          '[a-z]+$'
+          '[a-zA-Z]+$'
         )]),
         username: new FormControl('', [Validators.required, Validators.minLength(3), Validators.pattern(
           '[a-z0-9]+$'
@@ -36,6 +36,7 @@ export class RegisterComponent implements OnInit {
           '[a-z0-9]+$'
         )]),
         area: new FormControl('', [Validators.required]),
+        is_candidate: new FormControl('')
       }, {
         // validators: this.passwordMatchValidator('password', 'password_confirm')
         validators: this.passwordMatchValidator
@@ -108,6 +109,10 @@ export class RegisterComponent implements OnInit {
     }
     get password_confirm(){
         return this.form.get('password_confirm')
+    }
+
+    get is_candidate() {
+      return this.form.get('is_candidate')
     }
 
     backendErrorBoolean = false

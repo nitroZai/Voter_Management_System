@@ -28,6 +28,9 @@ class jwtRegisterAPIView(APIView):
         password_confirm = userData['password_confirm']
         email = userData['email']
         area = userData['area']
+        is_candidate = userData['is_candidate']
+        
+        print(is_candidate)
 
         if userData['password'] != userData['password_confirm']:
             raise exceptions.APIException('Password do not match')
@@ -65,7 +68,19 @@ class jwtRegisterAPIView(APIView):
         voter.area = areaObject
         voter.user = user
         voter.status = "Pending"
+        voter.is_candidate = is_candidate
         voter.save()
+
+        if is_candidate:
+            candidate = Candidate()
+            candidate.candidate_username = voter.user.username
+            candidate.candidate_name = user.first_name + ' ' + user.last_name
+            candidate.votes = 0
+            candidate.area = areaObject
+            candidate.save()
+
+            print(candidate)
+
 
         return Response(userSerializer.data)
 

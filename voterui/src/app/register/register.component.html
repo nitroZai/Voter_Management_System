@@ -89,6 +89,10 @@
               <ng-template #password_confirm_else> <small [ngStyle]="{'color': '#3EC70B'}">Valid Confirm Password</small></ng-template>
             </b>
             <br>
+            <label for="is_candidate"><h5>Politician?</h5></label>
+            <input class="form-check-input" type="checkbox" formControlName="is_candidate" value="true">
+
+            <br>
 
             <button class="btn btn-primary" [disabled]="form.invalid">Register</button>
 

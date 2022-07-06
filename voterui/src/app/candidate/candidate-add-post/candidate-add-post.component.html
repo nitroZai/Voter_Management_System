@@ -1,0 +1,19 @@
+
+<div class="container">
+    
+    <br><br>
+
+    <form class="form-group" (ngSubmit)="onPostSubmit()"  [formGroup]="form" >
+    
+        <h5><label for="username">Post Caption:</label></h5>
+        <br>
+        <textarea type="text" class="form-control" rows="6" formControlName="message"></textarea>
+        <b><small [ngStyle]="{'color': '#F24C4C'}" *ngIf="message && message.invalid && message.touched">Something's wrong, Re-Check the content</small></b>
+        <br>
+        <br>
+    
+        <button class="btn btn-primary" [disabled]="form.invalid" >
+            Post
+        </button>
+    </form>
+</div>

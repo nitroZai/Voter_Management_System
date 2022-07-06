@@ -69,17 +69,25 @@ export class LoginComponent implements OnInit {
                   console.log(res)
                   
                   if(res.is_admin != true){
-                    if(res.status == 'Pending' || res.status == 'Denied'){
-                      this.router.navigate(['apiMember/apiMemberNotVerified'])
-                    }else{
-                      if (res.is_voted === false){
-                        this.router.navigate(['apiMember/apiMemberVoting'])
-                        console.log('fasdfsad')
-                      }else {
-                        this.router.navigate(['apiMember/apiMemberAlreadyVoted'])
+                    if( res.is_candidate != true){
+                      if(res.status == 'Pending' || res.status == 'Denied'){
+                        this.router.navigate(['apiMember/apiMemberNotVerified'])
+                      }else{
+                        if (res.is_voted === false){
+                          this.router.navigate(['apiMember/apiMemberVoting'])
+                          console.log('fasdfsad')
+                        }else {
+                          this.router.navigate(['apiMember/apiMemberAlreadyVoted'])
+                        }
                       }
+                    }else{
+                      this.router.navigate(['apiCandidateHome/'])
                     }
-                  }else{
+                  }
+                  // }else if (res.is_candidate == true){
+                  //   this.router.navigate(['apiCandidateHome/'])
+                  // }
+                  else{
                     this.router.navigate(['apiAdmin/apiAdminHome'])
                   }
       

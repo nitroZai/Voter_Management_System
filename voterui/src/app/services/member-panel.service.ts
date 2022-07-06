@@ -25,4 +25,8 @@ export class MemberPanelService {
   onGettingSpecificCandidates(data: any){
     return this.http.post(this.baseUrl + 'apiGetSpecificLocationCandidates' , data)
   }
+
+  onGettingAllCandidatesPosts(): Observable<any[]> {
+    return this.http.get<any[]>(this.baseUrl + 'apiCandidateCampaignPost')
+  }
 }

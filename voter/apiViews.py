@@ -3,13 +3,63 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
 from rest_framework.decorators import api_view
-from .serializers import UserSerializer, VoterSerializer, AreaSerializer, CandidateSerializer
+from .serializers import CandidateCampaignSerializer, UserSerializer, VoterSerializer, AreaSerializer, CandidateSerializer
 from django.contrib.auth.models import User
 from .models import *
 from django.contrib.auth import authenticate
 from django.db.models import Q
 
 from .models import *
+
+@api_view(['GET', 'POST'])
+def apiCandidateCampaignPost(request):
+
+    if request.method == 'POST':
+        # Campaigns Save
+        postData = JSONParser().parse(request)
+        print(postData)
+        message = postData['message']
+        username = postData['username']
+        print(username)
+        candidate = Candidate.objects.get(candidate_username = username)
+        print(candidate)
+
+        candidateCampaign = CandidateCampaigns()
+        candidateCampaign.candidate = candidate
+        candidateCampaign.message = message
+        candidateCampaign.save()
+
+        return JsonResponse("Post Success", safe = False)
+
+    elif request.method == "GET":
+        # Member will be able to see the posts from here
+        candidateCampaign = CandidateCampaigns.objects.all()
+        candidateCampaignSerial = CandidateCampaignSerializer(candidateCampaign, many = True)
+
+        return JsonResponse(candidateCampaignSerial.data, safe = False)
+
+@api_view(['GET', 'POST'])
+def apiCandidateCampaignCheckPost(request):
+
+    if request.method == 'POST':
+
+        checkPostData = JSONParser().parse(request)
+
+        username = checkPostData['username']
+        print(username)
+
+        user = User.objects.get(username=username)
+        voter = Voter.objects.get(user = user)
+        candidate = Candidate.objects.get(candidate_username = username)
+        candidateCampaigns = CandidateCampaigns.objects.filter(candidate=candidate)
+
+        candidateCampaignsSerial = CandidateCampaignSerializer(candidateCampaigns, many = True)
+        print(candidateCampaignsSerial.data)
+        return JsonResponse(candidateCampaignsSerial.data, safe =False)
+
+
+
+        
 
 @api_view(['GET', 'POST'])
 def apiGetVoter(request):
@@ -19,8 +69,11 @@ def apiGetVoter(request):
         username = request.data['username']
         user = User.objects.get(username=username)
         voter = Voter.objects.get(user = user)
+        is_candidate = voter.is_candidate
 
-        return JsonResponse({'is_admin': voter.is_admin, 'status': voter.status, 'is_voted': voter.is_voted})
+        return JsonResponse(
+            {'is_admin': voter.is_admin, 'status': voter.status, 'is_voted': voter.is_voted, 'is_candidate': is_candidate}
+            )
 
 
 @csrf_exempt
@@ -67,6 +120,9 @@ def apiRegister(request):
         password = userRegistrationData['password']
         email = userRegistrationData['password']
         area = userRegistrationData['area']
+        is_candidate = userRegistrationData['is_candidate']
+        
+        print(is_candidate)
 
         areaObject = Area.objects.get(area = area)
 
@@ -80,6 +136,7 @@ def apiRegister(request):
         voter.area = areaObject
         voter.is_admin = False
         voter.status = "Pending"
+        voter.is_candidate = is_candidate
         voter.save()
 
         return JsonResponse("Successfully LoggedIn", safe = False)

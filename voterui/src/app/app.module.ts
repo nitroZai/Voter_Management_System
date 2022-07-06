@@ -19,6 +19,11 @@ import { AdminHomeComponent } from './admin-panel/admin-home/admin-home.componen
 import { MemberNotVerifiedComponent } from './memeber-panel/member-not-verified/member-not-verified.component';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CandidateComponent } from './candidate/candidate.component';
+import { CandidateAddPostComponent } from './candidate/candidate-add-post/candidate-add-post.component';
+import { CandidateCheckPostsComponent } from './candidate/candidate-check-posts/candidate-check-posts.component';
+import { MemberPoliticalCampaignsComponent } from './memeber-panel/member-political-campaigns/member-political-campaigns.component';
+import { MemberHomeComponent } from './memeber-panel/member-home/member-home.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +40,11 @@ import { ReactiveFormsModule } from '@angular/forms';
     MemberVotingComponent,
     AdminHomeComponent,
     MemberNotVerifiedComponent,
+    CandidateComponent,
+    CandidateAddPostComponent,
+    CandidateCheckPostsComponent,
+    MemberPoliticalCampaignsComponent,
+    MemberHomeComponent,
   ],
   imports: [
     BrowserModule,

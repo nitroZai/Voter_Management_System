@@ -1,3 +1,4 @@
+from email.policy import default
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
@@ -48,11 +49,29 @@ class Voter(models.Model):
     is_voted   = models.BooleanField(default=False)
     status     = models.CharField(max_length=10, default=ACCEPTED, choices=STATUS_CHOICES)
     area       = models.ForeignKey(Area, on_delete=models.PROTECT)
-    
+    is_candidate = models.BooleanField(default=False)
+
 class Candidate(models.Model):
+
+    candidate_username = models.CharField(max_length=255, default = 'raju')
     candidate_name = models.CharField(max_length=50)
     votes          = models.IntegerField()
     area           = models.ForeignKey(Area, on_delete=models.PROTECT) 
 
     def __str__(self) -> str:
         return self.candidate_name
+
+class CandidateCampaigns(models.Model):
+
+    candidate = models.ForeignKey(Candidate, on_delete=models.PROTECT)
+    message = models.TextField()
+    likes = models.IntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
+    modified_at = models.DateTimeField(auto_now = True)
+
+class CandidateComments(models.Model):
+
+    candidateCampaign = models.ForeignKey(CandidateCampaigns, on_delete=models.PROTECT)
+    comment = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    modified_at = models.DateTimeField(auto_now = True)

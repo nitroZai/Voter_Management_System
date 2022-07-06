@@ -1,0 +1,36 @@
+<!-- <br>
+
+<div class="d-flex align-items-center justify-content-center">
+    
+    <div class="card  text-white bg-dark mb-3" style="width: 30rem;" *ngFor="let candidateCampaign of candidateCampaigns">
+        
+            <div class="card-body">
+              <h5 class="card-title">Political Campaign</h5>
+              <p class="card-text">{{candidateCampaign.message}}</p>
+
+            </div>
+            <div class="card-footer text-muted">
+                {{candidateCampaign.created_at}}
+              </div>
+        
+      </div>
+
+
+</div> -->
+
+
+<div class="card text-center d-flex align-items-center my-3 py-2 text-white bg-dark mb-3" style="width: 18rem;" *ngFor="let candidateCampaign of candidateCampaigns">
+  <div class="card-body ">
+    <!-- <h5 class="card-title">Special title treatment</h5> -->
+    <p class="card-text">{{candidateCampaign.message}}</p>
+  
+    <!-- <button class="btn btn-success" (click)="onLike()" [hidden]="likeBoolean">Like</button>
+    <button class="btn btn-danger" (click)="onDisLike()" [hidden]="dislikeBoolean">DisLike</button> -->
+
+    <div class="card-footer bg-danger">
+      {{candidateCampaign.created_at}}
+    </div>
+
+    
+  </div>
+</div>
