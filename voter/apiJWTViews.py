@@ -68,6 +68,10 @@ class jwtRegisterAPIView(APIView):
         voter.area = areaObject
         voter.user = user
         voter.status = "Pending"
+        if is_candidate == '':
+            is_candidate = False
+        else:
+            is_candidate = True
         voter.is_candidate = is_candidate
         voter.save()
 

@@ -24,6 +24,7 @@ import { CandidateAddPostComponent } from './candidate/candidate-add-post/candid
 import { CandidateCheckPostsComponent } from './candidate/candidate-check-posts/candidate-check-posts.component';
 import { MemberPoliticalCampaignsComponent } from './memeber-panel/member-political-campaigns/member-political-campaigns.component';
 import { MemberHomeComponent } from './memeber-panel/member-home/member-home.component';
+// import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [

@@ -51,6 +51,9 @@ class Voter(models.Model):
     area       = models.ForeignKey(Area, on_delete=models.PROTECT)
     is_candidate = models.BooleanField(default=False)
 
+    def __str__(self) -> str:
+        return self.user.username
+
 class Candidate(models.Model):
 
     candidate_username = models.CharField(max_length=255, default = 'raju')
