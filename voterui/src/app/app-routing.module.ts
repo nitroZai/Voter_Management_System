@@ -45,7 +45,8 @@ const routes: Routes = [
       {path: 'apiCandidateCheckPost', component: CandidateCheckPostsComponent},
     ]
   },
-  {path:"", component: HomeComponent}
+  {path:"", component: HomeComponent},
+  {path:"**", redirectTo: ''}
 
 ];
 
