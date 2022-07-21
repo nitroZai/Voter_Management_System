@@ -1,9 +1,11 @@
 <br><br>
 
-<div class="container" style="width: 70%">
+<div class="container ">
     <form (ngSubmit)="onSearchSubmit(searchReference)" #searchReference="ngForm">
-            <input class='form-control' type="text" placeholder="Search..." name="searchField" ngModel>
-            <input type="submit" class="btn btn-block btn-dark"value="Search">
+            <div class="row">
+                <input class='form-control' type="text" placeholder="Search..." name="searchField" ngModel>
+                <button type="submit" class="btn btn-dark">Search</button>
+            </div>
     </form>
 </div>
 

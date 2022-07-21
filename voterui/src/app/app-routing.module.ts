@@ -9,6 +9,7 @@ import { CandidateAddPostComponent } from './candidate/candidate-add-post/candid
 import { CandidateCheckPostsComponent } from './candidate/candidate-check-posts/candidate-check-posts.component';
 import { CandidateComponent } from './candidate/candidate.component';
 import { HomeComponent } from './home/home.component';
+import { HomeinfoComponent } from './home/homeinfo/homeinfo.component';
 import { LoginComponent } from './login/login.component';
 import { MemberAlreadyVotedComponent } from './memeber-panel/member-already-voted/member-already-voted.component';
 import { MemberHomeComponent } from './memeber-panel/member-home/member-home.component';
@@ -21,8 +22,8 @@ import { RegisterComponent } from './register/register.component';
 import { LoginPanelService } from './services/login-panel.service';
 const routes: Routes = [
   
-  { path: 'apiLogin', component: LoginComponent},
-  { path: 'apiRegister', component: RegisterComponent},
+  // { path: 'apiLogin', component: LoginComponent},
+  // { path: 'apiRegister', component: RegisterComponent},
 
   { path: 'apiMember', component: MemeberPanelComponent, children: [
     { path: 'apiMemberSuccess', component: MemberSuccessComponent},
@@ -45,7 +46,11 @@ const routes: Routes = [
       {path: 'apiCandidateCheckPost', component: CandidateCheckPostsComponent},
     ]
   },
-  {path:"", component: HomeComponent},
+  {path:"", component: HomeComponent, children: [
+    { path: 'apiLogin', component: LoginComponent},
+    { path: 'apiRegister', component: RegisterComponent},
+    { path: 'homeinfo', component: HomeinfoComponent },
+  ]},
   {path:"**", redirectTo: ''}
 
 ];
